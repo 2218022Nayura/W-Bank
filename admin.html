@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <img src="wall2.png" alt="W-Bank Logo"> <!-- Gambar Logo -->
+            <span class="logo_name">W-Bank</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#" class="active">
+                    <i class="bx bx-grid-alt"></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="categories.html" class="menu-link">
+                    <i class="bx bx-box"></i>
+                    <span class="links_name">Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="transaction.html" class="menu-link">
+                    <i class="bx bx-list-ul"></i>
+                    <span class="links_name">Transaction</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <i class="bx bx-arrow-back"></i>
+                    <span class="links_name">Back to Home</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section">
+        <nav>
+            <div class="sidebar-button">
+                <i class="bx bx-menu sidebarBtn"></i>
+            </div>
+            <div class="profile-details">
+                <span class="admin_name">W-Bank Admin</span>
+            </div>
+        </nav>
+        <div class="home-content">
+            <h1>Welcome Admin</h1>
+            <p>This is your dashboard. Manage your categories and transactions here.</p>
+        </div>
+    </section>
+    <!-- Input checkbox sebagai trigger pop-up -->
+    <input type="checkbox" id="popup-toggle">
+    <!-- Label untuk strip 3 -->
+    <label for="popup-toggle" class="strip">☰</label>
+    <!-- Pop-up -->
+    <div class="popup" id="popup">
+        <img src="hp.png" alt="iPhone Screen" class="iphone-screen">
+    </div>
+</body>
+</html>
