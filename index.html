@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>W-Banking - Home</title>
     <style>
+        /* CSS Styles */
         body {
             margin: 0;
             padding: 0;
@@ -17,7 +18,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative; /* Added */
+            position: relative;
         }
         .overlay {
             background-color: rgba(255, 255, 255, 0.9);
@@ -68,11 +69,11 @@
         .carousel-item {
             flex: 0 0 auto;
             width: 100%;
-            display: none; /* Initially hide all slides */
+            display: none;
         }
 
         .carousel-item:first-child {
-            display: block; /* Display the first slide initially */
+            display: block;
         }
 
         .carousel-button {
@@ -145,15 +146,55 @@
             background-color: #555;
         }
         .carousel-item img {
-             max-width: 100%; /* Menetapkan lebar maksimum gambar */
-            height: 355px; /* Membiarkan tinggi gambar disesuaikan secara otomatis */
+             max-width: 100%;
+            height: 355px;
         }
 
         /* Position the Admin button */
         .admin-button {
-            display: block; /* Menampilkan tombol Admin di baris baru */
+            display: block;
             margin-top: 20px;
         }
+
+        /* Popup styles */
+        .popup-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .popup-container {
+            position: fixed;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: none;
+            transition: top 0.5s ease;
+        }
+
+        .popup-container.active {
+            top: 50%;
+        }
+
+        /* Popup close button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -162,9 +203,9 @@
         <p>Financial Solutions.</p>
         <a href="login.html">Login</a>
         <a href="register.html">Register</a>
-        <a href="admin.html" class="admin-button">Admin</a> <!-- Added class admin-button -->
+        <a href="admin.html" class="admin-button">Admin</a>
 
-        <!-- Different additional DOM elements -->
+        <!-- Additional content -->
         <div class="additional-content">
             <h2>Our Services</h2>
             <ul>
@@ -182,17 +223,36 @@
             <div class="carousel-item"><img src="cc6.jpg" alt="Image 5"></div>
             <div class="carousel-item"><img src="cc4.jpg" alt="Image 6"></div>
         </div>
-        <button class="carousel-button prev" onclick="prevSlide()">&#10094; </button>
-        <button class="carousel-button next" onclick="nextSlide()"> &#10095;</button>
+        <button class="carousel-button prev" onclick="prevSlide()">&#10094;</button>
+        <button class="carousel-button next" onclick="nextSlide()">&#10095;</button>
     </div>
 
     <!-- Bottom buttons -->
     <div class="bottom-buttons">
-        <button>Customer Comment</button>
-        <button>Information</button>
+        <!-- Tambahkan id pada tombol -->
+        <button id="popup-comment-btn">Customer Comment</button>
+        <button id="popup-info-btn">Information</button>
+    </div>
+
+    <!-- Popup Background -->
+    <div class="popup-background" id="popup-background"></div>
+
+    <!-- Popup boxes -->
+    <div class="popup-container" id="popup-comment">
+        <span class="close" onclick="closePopup('popup-comment')">&times;</span>
+        <p>1.NAY "This really petrified me, thank you W-BANK!"</p>
+        <p>2.ALDO "My finances improved after 2 months with W-BANK"</p>
+        <p>3.ALDO "I recently joined W-BANK, it's very interesting!"</p>
+    </div>
+
+    <div class="popup-container" id="popup-info">
+        <span class="close" onclick="closePopup('popup-info')">&times;</span>
+        <p>HAII</p>
+        <p>Designed by Naii</p>
     </div>
 
     <script>
+        // JavaScript functions
         var slideIndex = 0;
         showSlide(slideIndex);
 
@@ -213,6 +273,35 @@
             }
             slides[slideIndex].style.display = "block";
         }
+
+        // Fungsi untuk menampilkan popup
+        function showPopup(popupId) {
+            document.getElementById('popup-background').style.display = "block";
+            document.getElementById(popupId).style.display = "block";
+            setTimeout(function() {
+                document.getElementById(popupId).classList.add('active');
+                document.getElementById('popup-background').classList.add('active');
+            }, 10); // Menunggu sedikit agar transisi CSS berfungsi
+        }
+
+        // Fungsi untuk menutup popup
+        function closePopup(popupId) {
+            document.getElementById(popupId).classList.remove('active');
+            document.getElementById('popup-background').classList.remove('active');
+            setTimeout(function() {
+                document.getElementById(popupId).style.display = "none";
+                document.getElementById('popup-background').style.display = "none";
+            }, 500); // Durasi transisi CSS
+        }
+
+        // Tambahkan event listener untuk tombol yang akan menampilkan popup box
+        document.getElementById('popup-comment-btn').addEventListener('click', function() {
+            showPopup('popup-comment');
+        });
+
+        document.getElementById('popup-info-btn').addEventListener('click', function() {
+            showPopup('popup-info');
+        });
     </script>
 </body>
-</html> 
+</html>

@@ -60,7 +60,47 @@
     <label for="popup-toggle" class="strip">☰</label>
     <!-- Pop-up -->
     <div class="popup" id="popup">
-        <img src="hp.png" alt="iPhone Screen" class="iphone-screen">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">×</span>
+            <h2>Transaction Details</h2>
+            <div id="transaction-details"></div>
+        </div>
     </div>
+
+    <script>
+        // Fungsi untuk mengambil data transaksi dari server secara asinkron
+        async function fetchTransactions() {
+            try {
+                const response = await fetch('https://api.example.com/transactions');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching transactions:', error);
+                return [];
+            }
+        }
+
+        // Fungsi untuk menampilkan data transaksi dalam pop-up
+        async function showTransactionPopup() {
+            const transactions = await fetchTransactions();
+            const popupContent = document.getElementById('transaction-details');
+            popupContent.innerHTML = ''; // Kosongkan konten pop-up sebelum menambahkan data baru
+            transactions.forEach(transaction => {
+                const transactionElement = document.createElement('div');
+                transactionElement.innerHTML = `<p>${transaction.id}: ${transaction.description}</p>`;
+                popupContent.appendChild(transactionElement);
+            });
+            // Tampilkan pop-up setelah data dimuat
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        // Fungsi untuk menutup pop-up
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Event listener untuk menampilkan pop-up saat label di klik
+        document.querySelector('.strip').addEventListener('click', showTransactionPopup);
+    </script>
 </body>
 </html>

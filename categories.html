@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="kategori.css">
     <title>Categories</title>
+    <style>
+        /* Styles from your CSS file */
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Categories</h1>
         <a href="admin.html" class="back-btn">Back to Admin</a>
-        <table>
+        <table id="category-table">
             <thead>
                 <tr>
                     <th>Jenis Kartu</th>
@@ -23,38 +26,75 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Silver</td>
-                    <td>Category 1</td>
-                    <td>Deskripsi Category 1</td>
-                    <td>$100</td>
+                    <td contenteditable="true">Silver</td>
+                    <td contenteditable="true">Category 1</td>
+                    <td contenteditable="true">Deskripsi Category 1</td>
+                    <td contenteditable="true">$100</td>
                     <td>
-                        <button class="edit-btn">Edit</button>
-                        <button class="delete-btn">Delete</button>
+                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>Gold</td>
-                    <td>Category 2</td>
-                    <td>Deskripsi Category 2</td>
-                    <td>$150</td>
+                    <td contenteditable="true">Gold</td>
+                    <td contenteditable="true">Category 2</td>
+                    <td contenteditable="true">Deskripsi Category 2</td>
+                    <td contenteditable="true">$150</td>
                     <td>
-                        <button class="edit-btn">Edit</button>
-                        <button class="delete-btn">Delete</button>
+                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>Platinum</td>
-                    <td>Category 3</td>
-                    <td>Deskripsi Category 3</td>
-                    <td>$200</td>
+                    <td contenteditable="true">Platinum</td>
+                    <td contenteditable="true">Category 3</td>
+                    <td contenteditable="true">Deskripsi Category 3</td>
+                    <td contenteditable="true">$200</td>
                     <td>
-                        <button class="edit-btn">Edit</button>
-                        <button class="delete-btn">Delete</button>
+                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button class="add-btn">Tambah Data</button>
+        <button class="add-btn" onclick="addRow()">Tambah Data</button>
     </div>
+
+    <script>
+        function editRow(button) {
+            var row = button.parentNode.parentNode;
+            var cells = row.getElementsByTagName("td");
+            for (var i = 0; i < cells.length - 1; i++) {
+                var cell = cells[i];
+                if (cell.getAttribute("contenteditable") === "true") {
+                    cell.setAttribute("contenteditable", "true");
+                    cell.style.border = "1px solid black";
+                } else {
+                    cell.removeAttribute("contenteditable");
+                    cell.style.border = "none";
+                }
+            }
+        }
+
+        function deleteRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function addRow() {
+            var table = document.getElementById("category-table").getElementsByTagName("tbody")[0];
+            var newRow = table.insertRow(table.rows.length);
+            newRow.innerHTML = `
+                <td contenteditable="true">New jenis kartu</td>
+                <td contenteditable="true">New kategori</td>
+                <td contenteditable="true">New deskripsi</td>
+                <td contenteditable="true">$100</td>
+                <td>
+                    <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                    <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+        }
+    </script>
 </body>
 </html>
