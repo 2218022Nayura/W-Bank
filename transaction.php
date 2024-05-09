@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="admin.html" class="back-btn">Back to Admin</a>
+        <a href="admin.php" class="back-btn">Back to Admin</a>
         <h1>Transactions</h1>
         <table>
             <thead>

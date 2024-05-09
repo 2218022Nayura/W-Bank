@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <h1>Categories</h1>
-        <a href="admin.html" class="back-btn">Back to Admin</a>
+        <a href="admin.php" class="back-btn">Back to Admin</a>
         <table id="category-table">
             <thead>
                 <tr>

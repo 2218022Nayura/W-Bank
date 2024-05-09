@@ -136,7 +136,7 @@
                 <input type="email" id="email" name="email"><br>
                 <input type="submit" value="Register">
             </form>
-            <a href="login.html">Login</a>
+            <a href="login.php">Login</a>
         </div>
         <div class="image-container">
             <img src="cc2.jpg" alt="Register Image">

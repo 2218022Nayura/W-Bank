@@ -1,3 +1,33 @@
+<?php
+session_start();
+
+// Jika pengguna belum login, redirect ke halaman login
+if (!isset($_SESSION["username"])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Memeriksa waktu terakhir login
+if (isset($_SESSION["last_login_time"])) {
+    $last_login_time = $_SESSION["last_login_time"];
+    $current_time = time();
+    $time_diff = $current_time - $last_login_time;
+
+    // Jika waktu terakhir login lebih dari 10 detik yang lalu, tampilkan pesan
+    if ($time_diff > 10) {
+        // Unset session dan tampilkan pesan
+        session_unset();
+        session_destroy();
+        $error = "Waktu login telah habis. Silahkan login ulang.";
+        header("Location: login.php");
+        exit;
+    }
+}
+
+// Set waktu login terakhir
+$_SESSION["last_login_time"] = time();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +51,19 @@
                 </a>
             </li>
             <li>
-                <a href="categories.html" class="menu-link">
+                <a href="categories.php" class="menu-link">
                     <i class="bx bx-box"></i>
                     <span class="links_name">Categories</span>
                 </a>
             </li>
             <li>
-                <a href="transaction.html" class="menu-link">
+                <a href="transaction.php" class="menu-link">
                     <i class="bx bx-list-ul"></i>
                     <span class="links_name">Transaction</span>
                 </a>
             </li>
             <li>
-                <a href="index.html">
+                <a href="index.php">
                     <i class="bx bx-arrow-back"></i>
                     <span class="links_name">Back to Home</span>
                 </a>

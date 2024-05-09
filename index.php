@@ -201,9 +201,9 @@
     <div class="overlay">
         <h1>W-BANK</h1>
         <p>Financial Solutions.</p>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-        <a href="admin.html" class="admin-button">Admin</a>
+        <a href="login.php">Login</a>
+        <a href="register.php">Register</a>
+        <a href="admin.php" class="admin-button">Admin</a>
 
         <!-- Additional content -->
         <div class="additional-content">

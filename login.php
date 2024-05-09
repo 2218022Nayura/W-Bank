@@ -1,3 +1,29 @@
+<?php
+session_start();
+
+// Jika pengguna sudah login, redirect ke halaman admin
+if (isset($_SESSION["username"])) {
+    header("Location: admin.php");
+    exit;
+}
+
+// Memeriksa apakah form login telah dikirimkan
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Memeriksa apakah username dan password sesuai
+    if ($_POST["username"] == "2218022" && $_POST["password"] == "2218022") {
+        // Menyimpan username ke dalam session
+        $_SESSION['username'] = $_POST['username'];
+        
+        // Redirect ke halaman admin.php jika login berhasil
+        header("Location: admin.php");
+        exit;
+    } else {
+        // Jika username atau password tidak sesuai, tampilkan pesan error
+        $error = "Username atau password salah.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,6 +111,9 @@
     <img src="3.jpg" alt="Background Image">
     <div class="container">
         <h1>Login to W-Bank Account</h1>
+        <?php if(isset($error)): ?>
+            <p style="color: red;"><?php echo $error; ?></p>
+        <?php endif; ?>
         <form action="login.php" method="POST">
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username"><br>
@@ -92,8 +121,8 @@
             <input type="password" id="password" name="password"><br>
             <input type="submit" value="Login">
         </form>
-        <a href="index.html">Back</a>
-        <a href="register.html">Register</a>
+        <a href="index.php">Back</a>
+        <a href="register.php">Register</a>
     </div>
 </body>
 </html>
