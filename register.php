@@ -128,12 +128,12 @@
         <div class="form-container">
             <h1>Register</h1>
             <form action="register.php" method="POST">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password"><br>
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email"><br>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
                 <input type="submit" value="Register">
             </form>
             <a href="login.php">Login</a>
@@ -148,5 +148,52 @@
             </div>
         </div>
     </div>
+
+    <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $email = $_POST['email'];
+
+    if (!empty($username) && !empty($password) && !empty($email)) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $servername = "localhost";
+        $db_username = "root";
+        $db_password = ""; 
+        $dbname = "wbank";
+
+        $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Koneksi gagal: " . $conn->connect_error);
+        }
+
+        $stmt = $conn->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+        if ($stmt === false) {
+            die("Error prepare: " . $conn->error);
+        }
+
+        $bind = $stmt->bind_param("sss", $username, $hashed_password, $email);
+        if ($bind === false) {
+            die("Error bind_param: " . $stmt->error);
+        }
+
+        $exec = $stmt->execute();
+        if ($exec) {
+            echo "<script>
+                    alert('Welcome to W-Bank, we are happy to be able to help you, your happiness is our responsibility, enjoy our features and if you have any criticism or suggestions please contact us, thank you');
+                  </script>";
+        } else {
+            die("Error execute: " . $stmt->error);
+        }
+
+        $stmt->close();
+        $conn->close();
+    } else {
+        echo "<p style='color: red;'>Semua kolom harus diisi!</p>";
+    }
+}
+?>
 </body>
 </html>

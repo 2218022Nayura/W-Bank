@@ -1,27 +1,57 @@
 <?php
 session_start();
 
-// Jika pengguna sudah login, redirect ke halaman admin
+// Jika pengguna sudah login, redirect ke halaman admin.php
 if (isset($_SESSION["username"])) {
     header("Location: admin.php");
     exit;
 }
 
+// Membuat koneksi ke database PHPMyAdmin
+$servername = "localhost";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "wbank";
+
+$conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+
+// Cek koneksi
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 // Memeriksa apakah form login telah dikirimkan
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
     // Memeriksa apakah username dan password sesuai
-    if ($_POST["username"] == "2218022" && $_POST["password"] == "2218022") {
-        // Menyimpan username ke dalam session
-        $_SESSION['username'] = $_POST['username'];
-        
-        // Redirect ke halaman admin.php jika login berhasil
-        header("Location: admin.php");
-        exit;
+    $sql = "SELECT * FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row["password"])) {
+            // Menyimpan username ke dalam session
+            $_SESSION['username'] = $username;
+            
+            // Redirect ke halaman admin.php jika login berhasil
+            header("Location: admin.php");
+            exit;
+        } else {
+            // Jika password tidak sesuai, tampilkan pesan error
+            $error = "Password salah.";
+        }
     } else {
-        // Jika username atau password tidak sesuai, tampilkan pesan error
-        $error = "Username atau password salah.";
+        // Jika username tidak ditemukan, tampilkan pesan error
+        $error = "Username tidak ditemukan.";
     }
 }
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -116,9 +146,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
         <form action="login.php" method="POST">
             <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username"><br>
+            <input type="text" id="username" name="username" required><br>
             <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br>
+            <input type="password" id="password" name="password" required><br>
             <input type="submit" value="Login">
         </form>
         <a href="index.php">Back</a>
