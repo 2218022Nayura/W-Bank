@@ -101,14 +101,12 @@ if (isset($_POST["delete"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="kategori.css">
     <title>Categories</title>
-    <style>
-        /* Styles from your CSS file */
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>Categories</h1>
         <a href="admin.php" class="back-btn">Back to Admin</a>
+        <a href="cetak_pdf.php" class="back-btn">Cetak PDF</a>
         <table id="category-table">
             <thead>
                 <tr>
@@ -121,7 +119,6 @@ if (isset($_POST["delete"])) {
             </thead>
             <tbody>
                 <?php foreach ($categories as $category): ?>
-                    <tr>
                     <tr>
                         <td><?php echo $category['jenis_kartu']; ?></td>
                         <td><?php echo $category['kategori']; ?></td>

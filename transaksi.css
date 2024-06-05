@@ -21,6 +21,18 @@ h1 {
     color: #333;
 }
 
+.insert-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.insert-form input, .insert-form button {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 16px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -61,4 +73,18 @@ tr:nth-child(even) {
 button {
     font-family: Arial, sans-serif;
     text-decoration: none;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.back-btn:hover {
+    background-color: #555;
 }
